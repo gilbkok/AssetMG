@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AssetMG")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45fb2cc6f0295a40cbe130289551d66d2867b76e")]
 [assembly: System.Reflection.AssemblyProductAttribute("AssetMG")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AssetMG")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

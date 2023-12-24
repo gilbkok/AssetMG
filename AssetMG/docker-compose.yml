@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  sqlserver:
+    image: mcr.microsoft.com/windows/servercore:ltsc2019
+    environment:
+      SA_PASSWORD: "Security89"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+

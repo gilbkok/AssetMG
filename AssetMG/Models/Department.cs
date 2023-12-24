@@ -7,6 +7,6 @@ namespace AssetMG.Models
         [Key] 
         public int DId { get; set; }
         [Required] 
-        public string DName { get;}
+        public string DName { get; set; }
     }
 }

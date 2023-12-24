@@ -7,7 +7,7 @@ namespace AssetMG.Models
         [Key] 
         public int Id { get; set; }
         [Required] 
-        public string Aname { get;}
+        public string Aname { get; set; }
         [Required] 
         public int Quantity { get; set; }
         public int Cost { get; set; }

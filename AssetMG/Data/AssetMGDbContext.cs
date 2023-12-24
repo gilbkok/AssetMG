@@ -14,7 +14,7 @@ namespace AssetMG.Data
         public DbSet<Asset_Mvmt> Mvmt { get; set; }
         public DbSet<Asset_Mvmt_Type> MvmtTypes { get; set;}
         public DbSet<Asset_Operations> Operations { get; set; }
-        public DbSet<Asset_Type> Types { get; set; }
+        public DbSet<Asset_Type> Asset_Type { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Users> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
