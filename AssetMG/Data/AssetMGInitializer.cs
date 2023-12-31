@@ -6,7 +6,7 @@ namespace AssetMG.Data
     {
         public static void Initialize1(AssetMGDbContext Asset_Typecontext)
         {
-           Asset_Typecontext.Database.EnsureCreated();
+               Asset_Typecontext.Database.EnsureCreated();
             if (Asset_Typecontext.Asset_Type.Any())
                 return;
             Asset_Type[] asset_type = new[]

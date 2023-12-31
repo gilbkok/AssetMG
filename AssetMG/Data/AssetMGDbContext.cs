@@ -28,12 +28,54 @@ namespace AssetMG.Data
             modelBuilder.Entity<Asset_Type>().ToTable("Asset_Type");
             modelBuilder.Entity<Department>().ToTable("Department");
             modelBuilder.Entity<Users>().ToTable("Users");
-            modelBuilder.Entity<Assets>().HasKey(p => new {p.AssetTypeId, p.LocationId,p.CreateByUserId, p.DId});
-            modelBuilder.Entity<Asset_Mvmt>().HasKey(p => new { p.AssetId, p.Uid, });
-            modelBuilder.Entity<Asset_Operations>().HasKey(p => new { p.AssetId,p.Uid, });
-            modelBuilder.Entity<Users>().HasKey(p => new {p.DId,});
+            modelBuilder.Entity<Assets>(
+                entity =>
+                {
+                    entity.HasKey(e => e.Id);
+                    entity.HasOne<Asset_Type>(d => d.AssetType)
+                    .WithMany().HasForeignKey(d => d.AssetTypeId);
+                    entity.HasOne<Users>(d => d.CreatedByUser)
+                    .WithMany().HasForeignKey(d => d.CreateByUserId);
+                    entity.HasOne<Department>(d => d.Department)
+                    .WithMany().HasForeignKey(d => d.DId);
+                    entity.HasOne<Asset_Location>(d => d.Location)
+                    .WithMany().HasForeignKey(d => d.LocationId);
+                });
+            modelBuilder.Entity<Asset_Mvmt>(
+                entity =>
+                {
+                    entity.HasKey(e => e.MId);
+
+                    entity.HasOne<Assets>(d => d.Assets)
+                    .WithMany().HasForeignKey(d => d.AssetId);
+                   
+                    entity.HasOne<Asset_Mvmt_Type>(d => d.Type)
+                    .WithMany().HasForeignKey(d => d.AMId);
+
+                    entity.HasOne<Users>(d => d.Users)
+                    .WithMany().HasForeignKey(d => d.Uid);
+
+                });
+            modelBuilder.Entity<Asset_Operations>(
+                entity =>
+                {
+                    entity.HasKey(e => e.Operations_Id);
+                    entity.HasOne<Assets>(d => d.Assets)
+                    .WithMany().HasForeignKey(d => d.AssetId);
+
+                    entity.HasOne<Users>(d => d.Users)
+                    .WithMany().HasForeignKey(d => d.Uid);
+                });
+            modelBuilder.Entity<Users>(
+                entity =>
+                {
+                    entity.HasKey(e => e.Uid);
+                    entity.HasOne<Department>(d => d.Department)
+                    .WithMany().HasForeignKey(d => d.DId);
+                });
 
         }
 
     }
 }
+ 

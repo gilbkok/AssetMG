@@ -16,7 +16,7 @@ namespace AssetMG.Models
         public Assets Assets { get; set; }
 
         [ForeignKey("Movement_Type")]
-        public string AssetMvmt { get; set; }
+        public int AMId { get; set; }
         public Asset_Mvmt_Type Type { get; set; }
         [ForeignKey("users")]
         public int Uid { get; set; }

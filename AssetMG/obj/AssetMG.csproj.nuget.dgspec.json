@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\0002991-A343\\AssetMG\\AssetMG\\AssetMG.csproj": {}
+    "C:\\Users\\edson\\OneDrive\\Bureau\\AssetMG\\AssetMG\\AssetMG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\0002991-A343\\AssetMG\\AssetMG\\AssetMG.csproj": {
+    "C:\\Users\\edson\\OneDrive\\Bureau\\AssetMG\\AssetMG\\AssetMG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\0002991-A343\\AssetMG\\AssetMG\\AssetMG.csproj",
+        "projectUniqueName": "C:\\Users\\edson\\OneDrive\\Bureau\\AssetMG\\AssetMG\\AssetMG.csproj",
         "projectName": "AssetMG",
-        "projectPath": "C:\\Users\\0002991-A343\\AssetMG\\AssetMG\\AssetMG.csproj",
-        "packagesPath": "C:\\Users\\0002991-A343\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\0002991-A343\\AssetMG\\AssetMG\\obj\\",
+        "projectPath": "C:\\Users\\edson\\OneDrive\\Bureau\\AssetMG\\AssetMG\\AssetMG.csproj",
+        "packagesPath": "C:\\Users\\edson\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\edson\\OneDrive\\Bureau\\AssetMG\\AssetMG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\0002991-A343\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\edson\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
