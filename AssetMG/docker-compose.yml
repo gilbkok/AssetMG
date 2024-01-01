@@ -1,10 +1,9 @@
-version: '3.4'
+version: '3.3'
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:latest
+  db:
+    image: "mcr.microsoft.com/mssql/server"
     environment:
-      SA_PASSWORD: "Security89"
+      MSSQL_SA_PASSWORD: "Your_password123"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
-

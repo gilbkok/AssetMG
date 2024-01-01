@@ -1,4 +1,5 @@
 ﻿using AssetMG.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AssetMG.Data
 {
@@ -6,19 +7,23 @@ namespace AssetMG.Data
     {
         public static void Initialize1(AssetMGDbContext Asset_Typecontext)
         {
-               Asset_Typecontext.Database.EnsureCreated();
+            Asset_Typecontext.Database.EnsureCreated();
             if (Asset_Typecontext.Asset_Type.Any())
                 return;
             Asset_Type[] asset_type = new[]
             {
-                new Asset_Type { ATId = 1, ATName = "Computer" },
-                new Asset_Type { ATId = 2, ATName = "Furniture" }
-            };
+        new Asset_Type { ATName = "Computer" },
+        new Asset_Type { ATName = "Furniture" }
+    };
+            Asset_Typecontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
+            Asset_Typecontext.SaveChanges();
             foreach (var type in asset_type)
             {
                 Asset_Typecontext.Asset_Type.Add(type);
+                
             }
             Asset_Typecontext.SaveChanges();
+
         }
         public static void Initialize2(AssetMGDbContext Departmentcontext)
         {
@@ -27,14 +32,16 @@ namespace AssetMG.Data
                 return;
             Department[] department = new[]
             {
-              new Department { DId = 1, DName = "IT" },
-              new Department { DId = 2, DName = "Finance" }
+              new Department { DName = "IT" },
+              new Department { DName = "Finance" }
             };
             foreach (var name in department)
             {
+                Departmentcontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
                 Departmentcontext.Department.Add(name);
             }
             Departmentcontext.SaveChanges();
+            Departmentcontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type OFF");
         }
         public static void Initialize3(AssetMGDbContext Userscontext)
         {
@@ -45,32 +52,33 @@ namespace AssetMG.Data
             {
               new Users
     {
-        Uid = 1,
         FirstName = "John",
         LastName = "Doe",
         Position = "Manager",
         Username = "johndoe",
         Password = "password123",
-        DId = 1, // Assuming the Department ID for this user
-        Department = new Department { DId = 1, DName = "HR" } // Sample department linked to the user
+        //DId = 1, // Assuming the Department ID for this user
+        Department = new Department {  DName = "HR" } // Sample department linked to the user
     },
         new Users
     {
-        Uid = 2,
+        
         FirstName = "kokou",
         LastName = "pomenou",
         Position = "IT spec",
         Username = "kpomenou",
         Password = "pass456",
-        DId = 2, // Assuming the Department ID for this user
-        Department = new Department { DId = 2, DName = "Finance" } // Sample department linked to the user
+        //DId = 2, // Assuming the Department ID for this user
+        Department = new Department { DName = "Finance" } // Sample department linked to the user
     }
             };
             foreach (var user in users)
             {
+                Userscontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
                 Userscontext.Users.Add(user);
             }
             Userscontext.SaveChanges();
+            Userscontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type OFF");
         }
         public static void Initialize4(AssetMGDbContext Asset_Mvmt_Typecontext)
         {
@@ -79,15 +87,17 @@ namespace AssetMG.Data
                 return;
             Asset_Mvmt_Type[] mvmt_type = new[]
             {
-               new Asset_Mvmt_Type { AMId = 1, Asset_Mvmt_Type_Name = "Transfer", MDescription = "Transfer of assets" },
-               new Asset_Mvmt_Type { AMId = 2, Asset_Mvmt_Type_Name = "Maintenance", MDescription = "Asset maintenance record" }
+               new Asset_Mvmt_Type { Asset_Mvmt_Type_Name = "Transfer", MDescription = "Transfer of assets" },
+               new Asset_Mvmt_Type { Asset_Mvmt_Type_Name = "Maintenance", MDescription = "Asset maintenance record" }
 
         };
             foreach (var mvmt in mvmt_type )
             {
+                Asset_Mvmt_Typecontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
                 Asset_Mvmt_Typecontext.MvmtTypes.Add(mvmt);
             }
             Asset_Mvmt_Typecontext.SaveChanges();
+            Asset_Mvmt_Typecontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type OFF");
         }
         public static void Initialize5(AssetMGDbContext Asset_Locationcontext)
         {
@@ -96,14 +106,16 @@ namespace AssetMG.Data
                 return;
             Asset_Location[] locations = new[]
             {
-              new Asset_Location { ALId = 1, ALName = "Document room" },
-              new Asset_Location { ALId = 2, ALName = "Warehouse B" }
+              new Asset_Location { ALName = "Document room" },
+              new Asset_Location { ALName = "Warehouse B" }
             };
             foreach (var location in locations)
             {
+                Asset_Locationcontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
                 Asset_Locationcontext.Locations.Add(location);
             }
             Asset_Locationcontext.SaveChanges();
+            Asset_Locationcontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type OFF");
         }
         public static void Initialize6(AssetMGDbContext Assetscontext)
         {
@@ -114,7 +126,7 @@ namespace AssetMG.Data
             {
               new Assets
     {
-        Id = 1,
+        
         Aname = "Laptop",
         Quantity = 5,
         Cost = 1000,
@@ -123,17 +135,17 @@ namespace AssetMG.Data
         Locker = 102,
         Date = DateTime.Now,
         AssetTypeId = 1, // Assuming the Asset Type ID for this asset
-        AssetType = new Asset_Type { ATId = 1, ATName = "Computer" }, // Sample Asset Type linked to the asset
+        AssetType = new Asset_Type { ATName = "Computer" }, // Sample Asset Type linked to the asset
         CreateByUserId = 1, // Assuming the User ID who created this asset
-        CreatedByUser = new Users { Uid = 1, FirstName = "John", LastName = "Doe" }, // Sample User who created the asset
+        CreatedByUser = new Users { FirstName = "John", LastName = "Doe" }, // Sample User who created the asset
         DId = 1, // Assuming the Department ID for this asset
-        Department = new Department { DId = 1, DName = "HR" }, // Sample Department linked to the asset
+        Department = new Department { DName = "HR" }, // Sample Department linked to the asset
         LocationId = 1, // Assuming the Location ID for this asset
-        Location = new Asset_Location { ALId = 1, ALName = "Building A" } // Sample Location linked to the asset
+        Location = new Asset_Location { ALName = "Building A" } // Sample Location linked to the asset
     },
     new Assets
     {
-        Id = 2,
+        
         Aname = "Chair",
         Quantity = 10,
         Cost = 50,
@@ -142,20 +154,22 @@ namespace AssetMG.Data
         Locker = 105,
         Date = DateTime.Now,
         AssetTypeId = 2, // Assuming the Asset Type ID for this asset
-        AssetType = new Asset_Type { ATId = 2, ATName = "Furniture" }, // Sample Asset Type linked to the asset
+        AssetType = new Asset_Type { ATName = "Furniture" }, // Sample Asset Type linked to the asset
         CreateByUserId = 2, // Assuming the User ID who created this asset
-        CreatedByUser = new Users { Uid = 2, FirstName = "Jane", LastName = "Smith" }, // Sample User who created the asset
+        CreatedByUser = new Users { FirstName = "Jane", LastName = "Smith" }, // Sample User who created the asset
         DId = 2, // Assuming the Department ID for this asset
-        Department = new Department { DId = 2, DName = "Finance" }, // Sample Department linked to the asset
+        Department = new Department { DName = "Finance" }, // Sample Department linked to the asset
         LocationId = 2, // Assuming the Location ID for this asset
-        Location = new Asset_Location { ALId = 2, ALName = "Warehouse B" } // Sample Location linked to the asset
+        Location = new Asset_Location { ALName = "Warehouse B" } // Sample Location linked to the asset
     }
             };
             foreach (var asset in assets)
             {
+                Assetscontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type ON");
                 Assetscontext.Assets.Add(asset);
             }
             Assetscontext.SaveChanges();
+            Assetscontext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Asset_Type OFF");
         }
     }
 }

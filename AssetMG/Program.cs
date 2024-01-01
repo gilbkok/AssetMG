@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.AspNetCore.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
+
 // Add services to the container.
-
-
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
@@ -20,14 +20,19 @@ builder.Services.AddCors(options =>
             policy.AllowAnyHeader();
         });
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AssetMGDbContext>(options =>
-{
-    options.UseSqlServer("Data Source=localhost,1433; Initial Catalog=assetmg-sqlserver-1 Integrated Security=False;User Id=sa;Password=Security89");
-    //TODO: add using, trycatch
-});
+
+// Add DbContext
+builder.Services.AddDbContext<AssetMG.Data.AssetMGDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING"),
+            sqlServerOptionsAction: sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+            }));
 
 var app = builder.Build();
 
@@ -43,7 +48,7 @@ if (app.Environment.IsDevelopment())
         AssetMGInitializer.Initialize2(context);
         AssetMGInitializer.Initialize3(context);
         AssetMGInitializer.Initialize4(context);
-        AssetMGInitializer.Initialize5(context); 
+        AssetMGInitializer.Initialize5(context);
         AssetMGInitializer.Initialize6(context);
     }
 }
