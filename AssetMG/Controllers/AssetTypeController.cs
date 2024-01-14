@@ -2,43 +2,50 @@
 using AssetMG.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace AssetMG.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class mvmtypecontroller : ControllerBase
+    public class AssetTypeController : ControllerBase
     {
-        private readonly AssetMGDbContext _MvmtypeContext;
-        public mvmtypecontroller(AssetMGDbContext mvmtypeContext)
+        private readonly AssetMGDbContext _context;
+
+        public AssetTypeController(AssetMGDbContext context)
         {
-            _MvmtypeContext = mvmtypeContext;
+            _context = context;
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetAllMovementTypes()
+        public async Task<IActionResult> GetAllAssetTypes()
         {
             try
             {
-                var movementTypes = await _MvmtypeContext.MvmtTypes.ToListAsync();
-                return Ok(movementTypes);
+                var assetTypes = await _context.Asset_Type.ToListAsync();
+                return Ok(assetTypes);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMovementTypeById(int id)
+        public async Task<IActionResult> GetAssetTypeById(int id)
         {
             try
             {
-                var movementType = await _MvmtypeContext.MvmtTypes.FindAsync(id);
+                var assetType = await _context.Asset_Type.FindAsync(id);
 
-                if (movementType == null)
+                if (assetType == null)
                 {
                     return NotFound(); // HTTP 404 Not Found if the item is not found
                 }
 
-                return Ok(movementType); // HTTP 200 OK with the retrieved item
+                return Ok(assetType); // HTTP 200 OK with the retrieved item
             }
             catch (Exception ex)
             {
@@ -47,14 +54,14 @@ namespace AssetMG.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMovementType([FromBody] Asset_Mvmt_Type newMovementType)
+        public async Task<IActionResult> CreateAssetType([FromBody] Asset_Type newAssetType)
         {
             try
             {
-                _MvmtypeContext.MvmtTypes.Add(newMovementType);
-                await _MvmtypeContext.SaveChangesAsync();
+                _context.Asset_Type.Add(newAssetType);
+                await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetMovementTypeById), new { id = newMovementType.AMId }, newMovementType);
+                return CreatedAtAction(nameof(GetAssetTypeById), new { id = newAssetType.ATId }, newAssetType);
                 // HTTP 201 Created with the newly created item and its location in the header
             }
             catch (Exception ex)
@@ -63,18 +70,18 @@ namespace AssetMG.Controllers
             }
         }
 
-        [HttpPut("{id}")] 
-        public async Task<IActionResult> UpdateMovementType(int id, [FromBody] Asset_Mvmt_Type updatedMovementType)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAssetType(int id, [FromBody] Asset_Type updatedAssetType)
         {
             try
             {
-                if (id != updatedMovementType.AMId)
+                if (id != updatedAssetType.ATId)
                 {
-                    return BadRequest("ID mismatch");// HTTP 400 Bad Request if ID doesn't match
+                    return BadRequest("ID mismatch"); // HTTP 400 Bad Request if ID doesn't match
                 }
 
-                _MvmtypeContext.Entry(updatedMovementType).State = EntityState.Modified;
-                await _MvmtypeContext.SaveChangesAsync();
+                _context.Entry(updatedAssetType).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
 
                 return NoContent(); // HTTP 204 No Content on successful update
             }
@@ -85,19 +92,19 @@ namespace AssetMG.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMovementType(int id)
+        public async Task<IActionResult> DeleteAssetType(int id)
         {
             try
             {
-                var movementType = await _MvmtypeContext.MvmtTypes.FindAsync(id);
+                var assetType = await _context.Asset_Type.FindAsync(id);
 
-                if (movementType == null)
+                if (assetType == null)
                 {
                     return NotFound(); // HTTP 404 Not Found if the item is not found
                 }
 
-                _MvmtypeContext.MvmtTypes.Remove(movementType);
-                await _MvmtypeContext.SaveChangesAsync();
+                _context.Asset_Type.Remove(assetType);
+                await _context.SaveChangesAsync();
 
                 return NoContent(); // HTTP 204 No Content on successful deletion
             }
